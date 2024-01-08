@@ -1,2 +1,2 @@
-# PythonPractice1
+# Python Practice
 A Practice Playground for Python Projects
