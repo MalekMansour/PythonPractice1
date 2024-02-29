@@ -37,6 +37,7 @@ def main():
         if choice == '1':
             device = input("Enter the name of the device to add: ")
             system.add_device(device)
+            input("Press Enter to continue...")
         elif choice == '2':
             system.display_devices()
             if system.devices:
@@ -46,13 +47,16 @@ def main():
                     system.remove_device(device)
                 else:
                     print("Invalid device index.")
+            input("Press Enter to continue...")
         elif choice == '3':
             system.display_devices()
+            input("Press Enter to continue...")
         elif choice == '4':
             print("Exiting...")
             break
         else:
             print("Invalid choice. Please enter a valid option.")
+            input("Press Enter to continue...")
 
 
 if __name__ == "__main__":
