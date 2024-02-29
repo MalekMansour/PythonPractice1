@@ -32,31 +32,34 @@ def main():
         print("3. Display all devices")
         print("4. Exit")
         
-        choice = input("Enter your choice (1/2/3/4): ")
+        choice = input("Enter your choice (1/2/3/4): ").strip()
 
         if choice == '1':
-            device = input("Enter the name of the device to add: ")
+            device = input("Enter the name of the device to add: ").strip()
             system.add_device(device)
-            input("Press Enter to continue...")
         elif choice == '2':
             system.display_devices()
             if system.devices:
-                device_idx = int(input("Enter the index of the device to remove: "))
-                if 1 <= device_idx <= len(system.devices):
-                    device = system.devices[device_idx - 1]
-                    system.remove_device(device)
-                else:
-                    print("Invalid device index.")
-            input("Press Enter to continue...")
+                try:
+                    device_idx = int(input("Enter the index of the device to remove: ").strip())
+                    if 1 <= device_idx <= len(system.devices):
+                        device = system.devices[device_idx - 1]
+                        system.remove_device(device)
+                    else:
+                        print("Invalid device index.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+            else:
+                print("No devices to remove.")
         elif choice == '3':
             system.display_devices()
-            input("Press Enter to continue...")
         elif choice == '4':
             print("Exiting...")
             break
         else:
             print("Invalid choice. Please enter a valid option.")
-            input("Press Enter to continue...")
+        
+        input("Press Enter to continue...")
 
 
 if __name__ == "__main__":
