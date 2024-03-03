@@ -139,12 +139,10 @@ def main():
         elif choice == '2':
             property_id = int(input("Enter Property ID to modify: "))
             # Provide options for modification
-            # Example: address = input("Enter new address: ")
             new_details = {}
             address = input("Enter new address (leave blank if not changing): ")
             if address:
                 new_details['address'] = address
-            # Repeat for other fields
             saitmls.modify_property(property_id, new_details)
 
         elif choice == '3':
@@ -175,7 +173,6 @@ def main():
             first_name = input("Enter new first name (leave blank if not changing): ")
             if first_name:
                 new_details['first_name'] = first_name
-            # Repeat for other fields
             saitmls.modify_client(client_id, new_details)
 
         elif choice == '7':
