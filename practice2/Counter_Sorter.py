@@ -21,8 +21,14 @@ def count_and_sort_letters(input_string):
     for letter, count in sorted_letter_counts:
         print(f"{letter}: {count}")
 
-# Ask the user for input
-user_input = input("Enter a bunch of letters: ")
-
-# Call the function to count and sort letters
-count_and_sort_letters(user_input)
+# Infinite loop to allow the user to input strings repeatedly
+while True:
+    # Ask the user for input
+    user_input = input("Enter a bunch of letters (type 'exit' to quit): ")
+    
+    # Check if the user wants to exit
+    if user_input.lower() == 'exit':
+        break
+    
+    # Call the function to count and sort letters
+    count_and_sort_letters(user_input)
