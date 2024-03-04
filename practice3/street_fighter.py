@@ -1,4 +1,5 @@
 # Basic Fighter Game with 6 characthers
+# ARPG
 import random
 import time
 # main menu
@@ -6,14 +7,14 @@ print("Welcome to ARPG Fighter 1")
 # ARPG stands for Ayame, Ryuke, Power, Gud (assuming these are the main characthers)
 characthers = ("Ayame ", "Akira", "Ryuke ", "Aiko", "Power", "Gud")
 print("(1. Ayame) (2. Akira) (3. Ryuke) (4. Aiko) (5. Power) (6. Gud) ")
-# the attacks
+# The Attacks
 attacks = ("Cyclone Kick", "Shadow Strike", "Blazing Inferno", "Thundering Fist", "Cosmic Wave", "Demon Slash", "Infernal Claw", "Dragon Fang", "Supernova Blast")
 randomattack1 = random.choice(attacks)
 randomattack2 = random.choice(attacks)
 randomattack3 = random.choice(attacks)
 randomattack4 = random.choice(attacks)
 randomattack5 = random.choice(attacks)
-#user picks a characther for himself
+# User picks a characther for himself
 while True: 
     userpick = input("Pick your characther: ")
     if userpick == "1":
@@ -40,7 +41,7 @@ while True:
 # Pick a random fighter as opponent
 opponent = random.choice(characthers)
 print((f"Your opponent is {opponent}."))
-# user picks between start the fight or quit
+# User picks between start the fight or quit
 while True: 
     start = input("Would you like to start the fight? (y/n): ")
     if start == "n": 
