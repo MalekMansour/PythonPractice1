@@ -9,8 +9,8 @@ def generate_multiplication(difficulty):
         num1 = random.randint(1, 10)
         num2 = random.randint(1, 10)
     elif difficulty == 'hard':
-        num1 = random.randint(1, 20)
-        num2 = random.randint(1, 20)
+        num1 = random.randint(1, 100)
+        num2 = random.randint(1, 100)
     else:
         raise ValueError("Invalid difficulty level!")
     
