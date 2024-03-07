@@ -6,11 +6,11 @@ def generate_addition(difficulty):
         num1 = random.randint(1, 10)
         num2 = random.randint(1, 10)
     elif difficulty == 'normal':
-        num1 = random.randint(1, 50)
-        num2 = random.randint(1, 50)
-    elif difficulty == 'hard':
         num1 = random.randint(1, 100)
         num2 = random.randint(1, 100)
+    elif difficulty == 'hard':
+        num1 = random.randint(1, 1000)
+        num2 = random.randint(1, 1000)
     else:
         raise ValueError("Invalid difficulty level!")
     
