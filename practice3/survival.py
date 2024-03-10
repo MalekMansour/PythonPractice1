@@ -1,3 +1,4 @@
+import os
 import random
 
 class Player:
@@ -25,6 +26,7 @@ class Player:
         self.drink()
 
     def status(self):
+        os.system('cls' if os.name == 'nt' else 'clear')  # Clear the screen
         print(f"Days Survived: {self.days_survived}")
         print(f"Food remaining: {self.food}")
         print(f"Water remaining: {self.water}")
