@@ -2,8 +2,8 @@ import random
 
 class Player:
     def __init__(self):
-        self.food = random.randint(1, 10)
-        self.water = random.randint(1, 10)
+        self.food = random.randint(7, 9)
+        self.water = random.randint(5, 6)
         self.days_survived = 0
 
     def eat(self):
@@ -31,11 +31,11 @@ class Player:
 
     def survive_day(self, action):
         print("\nDay", self.days_survived + 1)
-        if action == "eat":
+        if action == 1:
             self.eat()
-        elif action == "drink":
+        elif action == 2:
             self.drink()
-        elif action == "both":
+        elif action == 3:
             self.eat_and_drink()
         else:
             print("You did nothing.")
@@ -48,11 +48,12 @@ def main():
     player = Player()
 
     while True:
-        action = input("\nWhat would you like to do today? (eat/drink/both/nothing): ").lower()
-        if action not in ['eat', 'drink', 'both', 'nothing']:
+        action = input("\nWhat would you like to do today? (1 for food, 2 for water, 3 for both, 4 for nothing): ")
+        if action not in ['1', '2', '3', '4']:
             print("Invalid action. Please choose again.")
             continue
 
+        action = int(action)
         player.survive_day(action)
 
         if player.food <= 0 and player.water <= 0:
@@ -62,4 +63,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
