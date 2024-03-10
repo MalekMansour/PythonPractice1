@@ -41,7 +41,28 @@ class Player:
             print("You did nothing.")
 
         self.days_survived += 1
-        self.status()
+
+    def choose_crate(self):
+        choice = input("\nYou survived 10 days! Choose a crate (1, 2, 3) or type 'nothing': ")
+        if choice == 'nothing':
+            print("You chose not to take anything from the crates.")
+            return
+
+        crate_number = int(choice)
+        if crate_number in [1, 2, 3]:
+            food_found = random.randint(1, 10)
+            water_found = random.randint(1, 10)
+            self.food += food_found
+            self.water += water_found
+            print(f"You found {food_found} food and {water_found} water in crate {crate_number}!")
+        else:
+            print("Invalid choice. You chose not to take anything from the crates.")
+
+    def check_survival(self):
+        if self.food <= 0 and self.water <= 0:
+            print("You ran out of food and water. Game over!")
+            return False
+        return True
 
 
 def main():
@@ -56,8 +77,12 @@ def main():
         action = int(action)
         player.survive_day(action)
 
-        if player.food <= 0 and player.water <= 0:
-            print("You ran out of food and water. Game over!")
+        if player.days_survived % 10 == 0:
+            player.choose_crate()
+
+        player.status()
+
+        if not player.check_survival():
             break
 
 
