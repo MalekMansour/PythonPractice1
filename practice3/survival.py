@@ -60,7 +60,7 @@ class Player:
 
     def check_survival(self):
         if self.food <= 0 and self.water <= 0:
-            print("You ran out of food and water. Game over!")
+            print("You ran out of food and water. You died!")
             return False
         return True
 
