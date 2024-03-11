@@ -5,21 +5,27 @@ class Player:
     def __init__(self):
         self.food = random.randint(7, 9)
         self.water = random.randint(5, 6)
+        self.days_without_food = 0
+        self.days_without_water = 0
         self.days_survived = 0
 
     def eat(self):
         if self.food > 0:
             self.food -= 1
+            self.days_without_food = 0  # Reset days without food
             print("You ate some food.")
         else:
             print("You have no food to eat.")
+            self.days_without_food += 1
 
     def drink(self):
         if self.water > 0:
             self.water -= 1
+            self.days_without_water = 0  # Reset days without water
             print("You drank some water.")
         else:
             print("You have no water to drink.")
+            self.days_without_water += 1
 
     def eat_and_drink(self):
         self.eat()
@@ -43,6 +49,7 @@ class Player:
             print("You did nothing.")
 
         self.days_survived += 1
+        self.check_survival()
 
     def choose_crate(self):
         choice = input("\nYou survived 10 days! Choose a crate (1, 2, 3) or type 'nothing': ")
@@ -61,9 +68,12 @@ class Player:
             print("Invalid choice. You chose not to take anything from the crates.")
 
     def check_survival(self):
-        if self.food <= 0 and self.water <= 0:
-            print("You ran out of food and water. You died!")
-            return False
+        if self.days_without_water >= 5:
+            print("You died of dehydration. Game over!")
+            exit()
+        elif self.days_without_food >= 7:
+            print("You died of starvation. Game over!")
+            exit()
         return True
 
 
@@ -83,9 +93,6 @@ def main():
             player.choose_crate()
 
         player.status()
-
-        if not player.check_survival():
-            break
 
 
 if __name__ == "__main__":
