@@ -36,6 +36,8 @@ class Player:
         print(f"Days Survived: {self.days_survived}")
         print(f"Food remaining: {self.food}")
         print(f"Water remaining: {self.water}")
+        print(f"Days without food: {self.days_without_food}")
+        print(f"Days without water: {self.days_without_water}")
 
     def survive_day(self, action):
         print("\nDay", self.days_survived + 1)
@@ -69,10 +71,10 @@ class Player:
 
     def check_survival(self):
         if self.days_without_water >= 6:
-            print("You died of dehydration. Game over!")
+            print("You died! You were dehydrated.")
             exit()
         elif self.days_without_food >= 8:
-            print("You died of starvation. Game over!")
+            print("You died! You starved to death.")
             exit()
 
     def reset_days_without_food(self):
