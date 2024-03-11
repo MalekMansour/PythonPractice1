@@ -77,17 +77,12 @@ class Player:
             print("You died! You starved to death.")
             exit()
 
-    def reset_days_without_food(self):
-        self.days_without_food = 0
-
-    def reset_days_without_water(self):
-        self.days_without_water = 0
-
 
 def main():
     player = Player()
 
     while True:
+        player.status()
         action = input("\nWhat would you like to do today? (1 for food, 2 for water, 3 for both, 4 for nothing): ")
         if action not in ['1', '2', '3', '4']:
             print("Invalid action. Please choose again.")
@@ -97,20 +92,17 @@ def main():
         if action in [1, 2, 3]:
             if action == 1:
                 player.eat()
-                player.reset_days_without_food()
             elif action == 2:
                 player.drink()
-                player.reset_days_without_water()
             elif action == 3:
                 player.eat_and_drink()
-                player.reset_days_without_food()
-                player.reset_days_without_water()
         elif action == 4:
             print("You did nothing.")
 
         player.days_survived += 1
+        player.days_without_food += 1
+        player.days_without_water += 1
         player.check_survival()
-        player.status()
 
         if player.days_survived % 10 == 0:
             player.choose_crate()
