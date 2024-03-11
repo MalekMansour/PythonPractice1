@@ -68,13 +68,18 @@ class Player:
             print("Invalid choice. You chose not to take anything from the crates.")
 
     def check_survival(self):
-        if self.days_without_water >= 5:
+        if self.days_without_water >= 6:
             print("You died of dehydration. Game over!")
             exit()
-        elif self.days_without_food >= 7:
+        elif self.days_without_food >= 8:
             print("You died of starvation. Game over!")
             exit()
-        return True
+
+    def reset_days_without_food(self):
+        self.days_without_food = 0
+
+    def reset_days_without_water(self):
+        self.days_without_water = 0
 
 
 def main():
@@ -87,12 +92,26 @@ def main():
             continue
 
         action = int(action)
-        player.survive_day(action)
+        if action in [1, 2, 3]:
+            if action == 1:
+                player.eat()
+                player.reset_days_without_food()
+            elif action == 2:
+                player.drink()
+                player.reset_days_without_water()
+            elif action == 3:
+                player.eat_and_drink()
+                player.reset_days_without_food()
+                player.reset_days_without_water()
+        elif action == 4:
+            print("You did nothing.")
+
+        player.days_survived += 1
+        player.check_survival()
+        player.status()
 
         if player.days_survived % 10 == 0:
             player.choose_crate()
-
-        player.status()
 
 
 if __name__ == "__main__":
