@@ -51,6 +51,8 @@ class Player:
             print("You did nothing.")
 
         self.days_survived += 1
+        self.days_without_food += 1
+        self.days_without_water += 1
         self.check_survival()
 
     def choose_crate(self):
@@ -61,8 +63,8 @@ class Player:
 
         crate_number = int(choice)
         if crate_number in [1, 2, 3]:
-            food_found = random.randint(1, 10)
-            water_found = random.randint(1, 10)
+            food_found = random.randint(0, 2)  # Only 0, 1, or 2 food items
+            water_found = random.randint(0, 2)  # Only 0, 1, or 2 water items
             self.food += food_found
             self.water += water_found
             print(f"You found {food_found} food and {water_found} water in crate {crate_number}!")
