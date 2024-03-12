@@ -1,7 +1,6 @@
 import random
 
 def generate_multiplication(difficulty):
-    """Generate a random multiplication equation based on difficulty."""
     if difficulty == 'easy':
         num1 = random.randint(1, 5)
         num2 = random.randint(1, 5)
