@@ -1,7 +1,6 @@
 import random
 
 def generate_equation(difficulty):
-    """Generate a random equation based on difficulty."""
     if difficulty == 'easy':
         num1 = random.randint(1, 10)
         num2 = random.randint(1, 10)
