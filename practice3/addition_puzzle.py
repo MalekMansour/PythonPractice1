@@ -19,31 +19,41 @@ def generate_addition(difficulty):
 
 def main():
     print("Welcome to the Addition Math Puzzle Game!")
-    print("Choose your difficulty: easy, normal, or hard")
-    difficulty = input("Difficulty: ").lower()
-    if difficulty not in ['easy', 'normal', 'hard']:
-        print("Invalid difficulty level! Please choose again.")
-        return
-    
-    print(f"You've chosen {difficulty} difficulty. Solve the additions to win!")
-    score = 0
     while True:
-        equation, correct_answer = generate_addition(difficulty)
-        print(f"Equation: {equation}")
-        user_answer = input("Your answer: ")
-        if user_answer.lower() == 'exit':
+        print("Choose your difficulty: easy, normal, or hard")
+        difficulty = input("Difficulty: ").lower()
+        if difficulty not in ['easy', 'normal', 'hard']:
+            print("Invalid difficulty level! Please choose again.")
+            continue
+        
+        print(f"You've chosen {difficulty} difficulty. Solve the additions to win!")
+        score = 0
+        rounds_played = 0
+        while rounds_played < 10:
+            equation, correct_answer = generate_addition(difficulty)
+            print(f"Equation: {equation}")
+            user_answer = input("Your answer: ")
+            if user_answer.lower() == 'exit':
+                print("Thanks for playing!")
+                return
+            
+            try:
+                user_answer = int(user_answer)
+                if user_answer == correct_answer:
+                    score += 1
+                    print("Correct!")
+                else:
+                    print(f"Sorry, the correct answer was {correct_answer}")
+                rounds_played += 1
+                print(f"Your current score: {score}\n")
+            except ValueError:
+                print("Please enter a valid number or 'exit' to quit.\n")
+        
+        print("You've completed 10 rounds!")
+        replay = input("Do you want to play again? (yes/no): ").lower()
+        if replay != 'yes':
             print("Thanks for playing!")
-            break
-        try:
-            user_answer = int(user_answer)
-            if user_answer == correct_answer:
-                score += 1
-                print("Correct!")
-            else:
-                print(f"Sorry, the correct answer was {correct_answer}")
-            print(f"Your current score: {score}\n")
-        except ValueError:
-            print("Please enter a valid number or 'exit' to quit.\n")
+            return
 
 if __name__ == "__main__":
     main()
