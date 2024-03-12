@@ -12,7 +12,7 @@ class Player:
     def eat(self):
         if self.food > 0:
             self.food -= 1
-            self.days_without_food = 0  # Reset days without food
+            self.days_without_food = 0  
             print("You ate some food.")
         else:
             print("You have no food to eat.")
@@ -21,7 +21,7 @@ class Player:
     def drink(self):
         if self.water > 0:
             self.water -= 1
-            self.days_without_water = 0  # Reset days without water
+            self.days_without_water = 0  
             print("You drank some water.")
         else:
             print("You have no water to drink.")
@@ -32,7 +32,7 @@ class Player:
         self.drink()
 
     def status(self):
-        os.system('cls' if os.name == 'nt' else 'clear')  # Clear the screen
+        os.system('cls' if os.name == 'nt' else 'clear') 
         print(f"Days Survived: {self.days_survived}")
         print(f"Food remaining: {self.food}")
         print(f"Water remaining: {self.water}")
