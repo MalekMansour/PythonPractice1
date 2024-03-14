@@ -87,7 +87,7 @@ def main():
         player.status()
         action = input("\nWhat would you like to do today? (1 for food, 2 for water, 3 for both, 4 for nothing): ")
         if action not in ['1', '2', '3', '4']:
-            print("Invalid action. Please choose again.")
+            print("Invalid action. Choose again.")
             continue
 
         action = int(action)
