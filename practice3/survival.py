@@ -3,8 +3,8 @@ import random
 
 class Player:
     def __init__(self):
-        self.food = random.randint(4, 6)
-        self.water = random.randint(5, 6)
+        self.food = random.randint(3, 5)
+        self.water = random.randint(4, 6)
         self.days_without_food = 0
         self.days_without_water = 0
         self.days_survived = 0
