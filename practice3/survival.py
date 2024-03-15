@@ -3,8 +3,8 @@ import random
 
 class Player:
     def __init__(self):
-        self.food = random.randint(5, 6)
-        self.water = random.randint(4, 5)
+        self.food = random.randint(7, 9)
+        self.water = random.randint(5, 6)
         self.days_without_food = 0
         self.days_without_water = 0
         self.days_survived = 0
@@ -12,7 +12,7 @@ class Player:
     def eat(self):
         if self.food > 0:
             self.food -= 1
-            self.days_without_food = 0  
+            self.days_without_food = 0 
             print("You ate some food.")
         else:
             print("You have no food to eat.")
@@ -63,8 +63,8 @@ class Player:
 
         crate_number = int(choice)
         if crate_number in [1, 2, 3]:
-            food_found = random.randint(0, 2)  # Only 0, 1, or 2 food items
-            water_found = random.randint(0, 2)  # Only 0, 1, or 2 water items
+            food_found = random.randint(0, 2)  
+            water_found = random.randint(0, 2)  
             self.food += food_found
             self.water += water_found
             print(f"You found {food_found} food and {water_found} water in crate {crate_number}!")
@@ -79,7 +79,6 @@ class Player:
             print("You died! You starved to death.")
             exit()
 
-
 def main():
     player = Player()
 
@@ -87,7 +86,7 @@ def main():
         player.status()
         action = input("\nWhat would you like to do today? (1 for food, 2 for water, 3 for both, 4 for nothing): ")
         if action not in ['1', '2', '3', '4']:
-            print("Invalid action. Choose again.")
+            print("Invalid action. Please choose again.")
             continue
 
         action = int(action)
@@ -108,7 +107,6 @@ def main():
 
         if player.days_survived % 10 == 0:
             player.choose_crate()
-
 
 if __name__ == "__main__":
     main()
