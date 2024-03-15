@@ -33,11 +33,13 @@ class Player:
 
     def status(self):
         os.system('cls' if os.name == 'nt' else 'clear') 
+        print("---------------------------------------------------")
         print(f"Days Survived: {self.days_survived}")
         print(f"Food remaining: {self.food}")
         print(f"Water remaining: {self.water}")
         print(f"Days without food: {self.days_without_food}")
         print(f"Days without water: {self.days_without_water}")
+        print("---------------------------------------------------")
 
     def survive_day(self, action):
         print("\nDay", self.days_survived + 1)
