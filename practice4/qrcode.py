@@ -13,6 +13,6 @@ qr.add_data(input_url)
 qr.make(fit=True)
 
 img = qr.make_image(fill_color="red", back_color="white")
-img.save("url_qrcode.png")
+img.save("my_qrcode.png")
 
 print(qr.data_list)
