@@ -9,7 +9,7 @@ qr = qrcode.QRCode(
     border=4,
 )
 
-qr.add_data(input_URL)
+qr.add_data(input_url)
 qr.make(fit=True)
 
 img = qr.make_image(fill_color="red", back_color="white")
