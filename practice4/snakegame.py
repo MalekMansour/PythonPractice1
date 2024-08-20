@@ -39,6 +39,15 @@ def your_score(score):
     value = score_font.render("Your Score: " + str(score), True, yellow)
     display.blit(value, [0, 0])
 
+def message(msg, color, y_displace=0, size="small"):
+    if size == "small":
+        text_surface = font_style.render(msg, True, color)
+    elif size == "large":
+        text_surface = score_font.render(msg, True, color)
+    
+    text_rect = text_surface.get_rect(center=(width / 2, height / 2 + y_displace))
+    display.blit(text_surface, text_rect)
+
 def gameLoop():  # Main function
     game_over = False
     game_close = False
@@ -60,8 +69,7 @@ def gameLoop():  # Main function
 
         while game_close:
             display.fill(blue)
-            message = font_style.render("You Lost! Press Q-Quit or C-Play Again", True, red)
-            display.blit(message, [width / 6, height / 3])
+            message("You Lost! Press Q-Quit or C-Play Again", red, y_displace=-50, size="large")
             your_score(length_of_snake - 1)
             pygame.display.update()
 
@@ -123,6 +131,29 @@ def gameLoop():  # Main function
     pygame.quit()
     quit()
 
-# Run the game
-gameLoop()
+def game_menu():
+    menu = True
+    while menu:
+        display.fill(blue)
+        message("Snake Game", green, y_displace=-100, size="large")
+        message("Press S to Start", white, y_displace=-10)
+        message("Press C to Customize", white, y_displace=20)
+        message("Press Q to Quit", white, y_displace=50)
+        pygame.display.update()
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_s:
+                    gameLoop()
+                elif event.key == pygame.K_c:
+                    # Customize functionality (could be added later)
+                    print("Customize option selected. This can be expanded.")
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+
+# Run the game menu
+game_menu()
