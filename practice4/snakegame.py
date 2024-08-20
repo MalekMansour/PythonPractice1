@@ -10,13 +10,17 @@ width, height = 600, 400
 display = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Snake Game")
 
-# Set colors
+# Set default colors
 white = (255, 255, 255)
 yellow = (255, 255, 102)
 black = (0, 0, 0)
 red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
+
+# Set default snake and background colors
+snake_color = black
+background_color = blue
 
 # Set clock
 clock = pygame.time.Clock()
@@ -31,9 +35,9 @@ snake_block = 10
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
-def our_snake(snake_block, snake_list):
+def our_snake(snake_block, snake_list, color):
     for x in snake_list:
-        pygame.draw.rect(display, black, [x[0], x[1], snake_block, snake_block])
+        pygame.draw.rect(display, color, [x[0], x[1], snake_block, snake_block])
 
 def your_score(score):
     value = score_font.render("Your Score: " + str(score), True, yellow)
@@ -49,6 +53,8 @@ def message(msg, color, y_displace=0, size="small"):
     display.blit(text_surface, text_rect)
 
 def gameLoop():  # Main function
+    global snake_color, background_color
+
     game_over = False
     game_close = False
 
@@ -68,7 +74,7 @@ def gameLoop():  # Main function
     while not game_over:
 
         while game_close:
-            display.fill(blue)
+            display.fill(background_color)
             message("You Lost! Press Q-Quit or C-Play Again", red, y_displace=-50, size="large")
             your_score(length_of_snake - 1)
             pygame.display.update()
@@ -102,7 +108,7 @@ def gameLoop():  # Main function
             game_close = True
         x1 += x1_change
         y1 += y1_change
-        display.fill(blue)
+        display.fill(background_color)
 
         pygame.draw.rect(display, green, [foodx, foody, snake_block, snake_block])
         snake_head = []
@@ -116,7 +122,7 @@ def gameLoop():  # Main function
             if x == snake_head:
                 game_close = True
 
-        our_snake(snake_block, snake_list)
+        our_snake(snake_block, snake_list, snake_color)
         your_score(length_of_snake - 1)
 
         pygame.display.update()
@@ -131,10 +137,64 @@ def gameLoop():  # Main function
     pygame.quit()
     quit()
 
+def customize_menu():
+    global snake_color, background_color
+    customizing = True
+    while customizing:
+        display.fill(background_color)
+        message("Customize Menu", green, y_displace=-100, size="large")
+        message("Press 1 to Change Snake Color", white, y_displace=-30)
+        message("Press 2 to Change Background Color", white, y_displace=0)
+        message("Press B to go Back", white, y_displace=30)
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    # Change snake color
+                    snake_color = choose_color("snake")
+                elif event.key == pygame.K_2:
+                    # Change background color
+                    background_color = choose_color("background")
+                elif event.key == pygame.K_b:
+                    customizing = False
+
+def choose_color(item):
+    colors = {
+        'R': red,
+        'G': green,
+        'B': blue,
+        'W': white,
+        'Y': yellow,
+        'K': black
+    }
+    color_choice = True
+    while color_choice:
+        display.fill(background_color)
+        message(f"Choose {item} Color", green, y_displace=-100, size="large")
+        message("R - Red", red, y_displace=-30)
+        message("G - Green", green, y_displace=0)
+        message("B - Blue", blue, y_displace=30)
+        message("W - White", white, y_displace=60)
+        message("Y - Yellow", yellow, y_displace=90)
+        message("K - Black", black, y_displace=120)
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key in colors:
+                    return colors[event.key.upper()]
+
 def game_menu():
     menu = True
     while menu:
-        display.fill(blue)
+        display.fill(background_color)
         message("Snake Game", green, y_displace=-100, size="large")
         message("Press S to Start", white, y_displace=-10)
         message("Press C to Customize", white, y_displace=20)
@@ -149,8 +209,7 @@ def game_menu():
                 if event.key == pygame.K_s:
                     gameLoop()
                 elif event.key == pygame.K_c:
-                    # Customize functionality (could be added later)
-                    print("Customize option selected. This can be expanded.")
+                    customize_menu()
                 elif event.key == pygame.K_q:
                     pygame.quit()
                     quit()
