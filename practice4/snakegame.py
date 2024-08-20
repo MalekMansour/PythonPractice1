@@ -1,5 +1,4 @@
 import pygame
-import time
 import random
 
 # Initialize pygame
@@ -164,15 +163,15 @@ def customize_menu():
 
 def choose_color(item):
     colors = {
-        'R': red,
-        'G': green,
-        'B': blue,
-        'W': white,
-        'Y': yellow,
-        'K': black
+        pygame.K_r: red,
+        pygame.K_g: green,
+        pygame.K_b: blue,
+        pygame.K_w: white,
+        pygame.K_y: yellow,
+        pygame.K_k: black
     }
-    color_choice = True
-    while color_choice:
+    choosing = True
+    while choosing:
         display.fill(background_color)
         message(f"Choose {item} Color", green, y_displace=-100, size="large")
         message("R - Red", red, y_displace=-30)
@@ -189,7 +188,8 @@ def choose_color(item):
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key in colors:
-                    return colors[event.key.upper()]
+                    choosing = False
+                    return colors[event.key]
 
 def game_menu():
     menu = True
