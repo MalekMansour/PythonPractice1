@@ -16,7 +16,6 @@ background_color = (30, 30, 60)  # Default background color
 snake_color = (255, 102, 102)  # Coral Red Snake
 background_color = (30, 30, 60)  # Navy Blue Background
 
-# Set clock
 clock = pygame.time.Clock()
 
 # Set snake speed
