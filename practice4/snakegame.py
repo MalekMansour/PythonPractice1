@@ -1,31 +1,25 @@
 import pygame
 import random
 
-# Initialize pygame
 pygame.init()
 
-# Set up display
+# Display
 width, height = 600, 400
 display = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Snake Game")
 
-# Define default colors
+# Default Settings
 white = (255, 255, 255)
 black = (0, 0, 0)
-background_color = (30, 30, 60)  # Default background color
+background_color = (30, 30, 60)  
+background_color = (30, 42, 94)  
 
-# Set default snake and background colors (using the provided hex colors)
-snake_color = (13, 124, 102)  # Green Snake
-background_color = (30, 42, 94)  # Blue Background
-
-# Set clock
-clock = pygame.time.Clock()
-
-# Set snake speed
+# Snake Settings
 snake_speed = 15
-
-# Set snake block size
 snake_block = 10
+snake_color = (13, 124, 102)  
+
+clock = pygame.time.Clock()
 
 # Define font style and size
 font_style = pygame.font.SysFont("bahnschrift", 25)
