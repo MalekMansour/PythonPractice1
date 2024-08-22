@@ -10,7 +10,7 @@ pygame.display.set_caption("Snake Game")
 
 white = (255, 255, 255)
 black = (0, 0, 0)
-background_color = (30, 30, 60)  # Default background color
+background_color = (30, 30, 60)  
 
 # Set default snake and background colors (specific hex colors)
 snake_color = (255, 102, 102)  # Coral Red Snake
