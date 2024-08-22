@@ -11,7 +11,6 @@ pygame.display.set_caption("Snake Game")
 # Default Settings
 white = (255, 255, 255)
 black = (0, 0, 0)
-background_color = (30, 30, 60)  
 background_color = (30, 42, 94)  
 
 # Snake Settings
@@ -21,7 +20,7 @@ snake_color = (13, 124, 102)
 
 clock = pygame.time.Clock()
 
-# Define font style and size
+# Fonts
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
@@ -60,7 +59,7 @@ def message(msg, color, y_displace=0, size="small"):
     text_rect = text_surface.get_rect(center=(width / 2, height / 2 + y_displace))
     display.blit(text_surface, text_rect)
 
-def gameLoop():  # Main function
+def gameLoop():  
     global snake_color, background_color
 
     game_over = False
@@ -120,7 +119,7 @@ def gameLoop():  # Main function
         y1 += y1_change
         draw_gradient_background(background_color, (10, 10, 30))
 
-        draw_rounded_rect(display, (255, 218, 118), [foodx, foody, snake_block, snake_block], radius=0.5)  # Food color (Yellow)
+        draw_rounded_rect(display, (255, 218, 118), [foodx, foody, snake_block, snake_block], radius=0.5)  
         snake_head = []
         snake_head.append(x1)
         snake_head.append(y1)
@@ -173,7 +172,6 @@ def customize_menu():
                     customizing = False
 
 def choose_color(item):
-    # Define the provided hex colors
     colors = {
         pygame.K_1: (13, 124, 102),   # Green
         pygame.K_2: (30, 42, 94),     # Blue
@@ -235,5 +233,4 @@ def game_menu():
                     pygame.quit()
                     quit()
 
-# Run the game menu
 game_menu()
