@@ -18,7 +18,6 @@ background_color = (30, 30, 60)  # Navy Blue Background
 
 clock = pygame.time.Clock()
 
-# Set snake speed
 snake_speed = 15
 
 # Set snake block size
