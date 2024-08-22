@@ -14,9 +14,9 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 background_color = (30, 30, 60)  # Default background color
 
-# Set default snake and background colors (specific hex colors)
-snake_color = (255, 102, 102)  # Coral Red Snake
-background_color = (30, 30, 60)  # Navy Blue Background
+# Set default snake and background colors (using the provided hex colors)
+snake_color = (13, 124, 102)  # Green Snake
+background_color = (30, 42, 94)  # Blue Background
 
 # Set clock
 clock = pygame.time.Clock()
@@ -126,7 +126,7 @@ def gameLoop():  # Main function
         y1 += y1_change
         draw_gradient_background(background_color, (10, 10, 30))
 
-        draw_rounded_rect(display, (255, 255, 0), [foodx, foody, snake_block, snake_block], radius=0.5)  # Food color
+        draw_rounded_rect(display, (255, 218, 118), [foodx, foody, snake_block, snake_block], radius=0.5)  # Food color (Yellow)
         snake_head = []
         snake_head.append(x1)
         snake_head.append(y1)
@@ -179,22 +179,26 @@ def customize_menu():
                     customizing = False
 
 def choose_color(item):
-    # Define distinct hex colors
+    # Define the provided hex colors
     colors = {
-        pygame.K_1: (255, 102, 102),  # Coral Red
-        pygame.K_2: (102, 205, 170),  # Medium Aquamarine
-        pygame.K_3: (255, 182, 193),  # Light Pink
-        pygame.K_4: (173, 216, 230),  # Light Blue
-        pygame.K_5: (144, 238, 144),  # Light Green
-        pygame.K_6: (255, 255, 224),  # Light Yellow
+        pygame.K_1: (13, 124, 102),   # Green
+        pygame.K_2: (30, 42, 94),     # Blue
+        pygame.K_3: (247, 181, 202),  # Pink
+        pygame.K_4: (103, 65, 136),   # Purple
+        pygame.K_5: (128, 0, 0),      # Red
+        pygame.K_6: (255, 131, 67),   # Orange
+        pygame.K_7: (255, 218, 118),  # Yellow
+        pygame.K_8: (119, 228, 200),  # Turquoise
     }
     color_names = {
-        pygame.K_1: "Coral Red",
-        pygame.K_2: "Medium Aquamarine",
-        pygame.K_3: "Light Pink",
-        pygame.K_4: "Light Blue",
-        pygame.K_5: "Light Green",
-        pygame.K_6: "Light Yellow",
+        pygame.K_1: "Snake Green",
+        pygame.K_2: "Sea Blue",
+        pygame.K_3: "Cuty Pink",
+        pygame.K_4: "Lover Purple",
+        pygame.K_5: "Killer Red",
+        pygame.K_6: "Hacker Orange",
+        pygame.K_7: "Sunshine Yellow",
+        pygame.K_8: "Pearl Turquoise",
     }
     choosing = True
     while choosing:
