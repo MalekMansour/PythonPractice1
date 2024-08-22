@@ -1,23 +1,27 @@
 import pygame
 import random
 
+# Initialize pygame
 pygame.init()
 
+# Set up display
 width, height = 600, 400
 display = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Snake Game")
 
-
+# Define default colors
 white = (255, 255, 255)
 black = (0, 0, 0)
-background_color = (30, 30, 60)  
+background_color = (30, 30, 60)  # Default background color
 
 # Set default snake and background colors (specific hex colors)
 snake_color = (255, 102, 102)  # Coral Red Snake
 background_color = (30, 30, 60)  # Navy Blue Background
 
+# Set clock
 clock = pygame.time.Clock()
 
+# Set snake speed
 snake_speed = 15
 
 # Set snake block size
@@ -27,9 +31,27 @@ snake_block = 10
 font_style = pygame.font.SysFont("bahnschrift", 25)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
+def draw_rounded_rect(surface, color, rect, radius=0.5):
+    """ Draws a rounded rectangle. """
+    rect = pygame.Rect(rect)
+    color = pygame.Color(*color)
+    radius = min(rect.width, rect.height) * radius
+    shape_surf = pygame.Surface(rect.size, pygame.SRCALPHA)
+    pygame.draw.rect(shape_surf, color, (0, 0, *rect.size), border_radius=int(radius))
+    surface.blit(shape_surf, rect.topleft)
+
+def draw_gradient_background(color_top, color_bottom):
+    """ Draws a gradient background from top to bottom. """
+    for y in range(height):
+        color = [
+            color_top[i] + (color_bottom[i] - color_top[i]) * y // height
+            for i in range(3)
+        ]
+        pygame.draw.line(display, color, (0, y), (width, y))
+
 def our_snake(snake_block, snake_list, color):
     for x in snake_list:
-        pygame.draw.rect(display, color, [x[0], x[1], snake_block, snake_block])
+        draw_rounded_rect(display, color, [x[0], x[1], snake_block, snake_block], radius=0.2)
 
 def your_score(score):
     value = score_font.render("Your Score: " + str(score), True, white)
@@ -66,7 +88,7 @@ def gameLoop():  # Main function
     while not game_over:
 
         while game_close:
-            display.fill(background_color)
+            draw_gradient_background(background_color, (10, 10, 30))
             message("You Lost!", white, y_displace=-50, size="large")
             message("Press M to return to Main Menu", white, y_displace=0, size="small")
             message("Press Q to Quit", white, y_displace=30, size="small")
@@ -102,9 +124,9 @@ def gameLoop():  # Main function
             game_close = True
         x1 += x1_change
         y1 += y1_change
-        display.fill(background_color)
+        draw_gradient_background(background_color, (10, 10, 30))
 
-        pygame.draw.rect(display, (255, 255, 0), [foodx, foody, snake_block, snake_block])  # Food color
+        draw_rounded_rect(display, (255, 255, 0), [foodx, foody, snake_block, snake_block], radius=0.5)  # Food color
         snake_head = []
         snake_head.append(x1)
         snake_head.append(y1)
@@ -135,7 +157,7 @@ def customize_menu():
     global snake_color, background_color
     customizing = True
     while customizing:
-        display.fill(background_color)
+        draw_gradient_background(background_color, (10, 10, 30))
         message("Customize Menu", white, y_displace=-100, size="large")
         message("Press 1 to Change Snake Color", white, y_displace=-30)
         message("Press 2 to Change Background Color", white, y_displace=0)
@@ -176,7 +198,7 @@ def choose_color(item):
     }
     choosing = True
     while choosing:
-        display.fill(background_color)
+        draw_gradient_background(background_color, (10, 10, 30))
         message(f"Choose {item} Color", white, y_displace=-100, size="large")
         for key, color in color_names.items():
             message(f"{pygame.key.name(key)} - {color}", white, y_displace=-100 + 30 * list(color_names.keys()).index(key) + 30)
@@ -195,7 +217,7 @@ def choose_color(item):
 def game_menu():
     menu = True
     while menu:
-        display.fill(background_color)
+        draw_gradient_background(background_color, (10, 10, 30))
         message("Snake Game", white, y_displace=-100, size="large")
         message("Press S to Start", white, y_displace=-10)
         message("Press C to Customize", white, y_displace=20)
