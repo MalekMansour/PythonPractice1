@@ -4,7 +4,6 @@ import numpy as np
 import random
 import time
 
-# Initialize pygame
 pygame.init()
 
 # Set up display
