@@ -2,16 +2,17 @@ import pygame
 import sys
 import numpy as np
 import random
+import time
 
 # Initialize pygame
 pygame.init()
 
 # Set up display
-width, height = 300, 300
-line_width = 10
+width, height = 1200, 600
+line_width = 15
 board_rows = 3
 board_cols = 3
-square_size = width // board_cols
+square_size = height // board_cols
 circle_radius = square_size // 3
 circle_width = 15
 cross_width = 25
@@ -44,8 +45,8 @@ board = np.zeros((board_rows, board_cols))
 
 def draw_lines():
     # Horizontal lines
-    pygame.draw.line(display, line_color, (0, square_size), (width, square_size), line_width)
-    pygame.draw.line(display, line_color, (0, 2 * square_size), (width, 2 * square_size), line_width)
+    pygame.draw.line(display, line_color, (0, square_size), (height, square_size), line_width)
+    pygame.draw.line(display, line_color, (0, 2 * square_size), (height, 2 * square_size), line_width)
     # Vertical lines
     pygame.draw.line(display, line_color, (square_size, 0), (square_size, height), line_width)
     pygame.draw.line(display, line_color, (2 * square_size, 0), (2 * square_size, height), line_width)
@@ -54,10 +55,10 @@ def draw_figures():
     for row in range(board_rows):
         for col in range(board_cols):
             if board[row][col] == 1:
-                pygame.draw.circle(display, circle_color, (int(col * square_size + square_size//2), int(row * square_size + square_size//2)), circle_radius, circle_width)
-            elif board[row][col] == 2:
                 pygame.draw.line(display, cross_color, (col * square_size + space, row * square_size + square_size - space), (col * square_size + square_size - space, row * square_size + space), cross_width)
                 pygame.draw.line(display, cross_color, (col * square_size + space, row * square_size + space), (col * square_size + square_size - space, row * square_size + square_size - space), cross_width)
+            elif board[row][col] == 2:
+                pygame.draw.circle(display, circle_color, (int(col * square_size + square_size//2), int(row * square_size + square_size//2)), circle_radius, circle_width)
 
 def mark_square(row, col, player):
     board[row][col] = player
@@ -97,9 +98,9 @@ def draw_vertical_winning_line(col, player):
     posX = col * square_size + square_size//2
 
     if player == 1:
-        color = circle_color
-    elif player == 2:
         color = cross_color
+    elif player == 2:
+        color = circle_color
 
     pygame.draw.line(display, color, (posX, 15), (posX, height - 15), line_width)
 
@@ -107,27 +108,27 @@ def draw_horizontal_winning_line(row, player):
     posY = row * square_size + square_size//2
 
     if player == 1:
-        color = circle_color
-    elif player == 2:
         color = cross_color
+    elif player == 2:
+        color = circle_color
 
-    pygame.draw.line(display, color, (15, posY), (width - 15, posY), line_width)
+    pygame.draw.line(display, color, (15, posY), (height - 15, posY), line_width)
 
 def draw_ascending_diagonal(player):
     if player == 1:
-        color = circle_color
-    elif player == 2:
         color = cross_color
+    elif player == 2:
+        color = circle_color
 
-    pygame.draw.line(display, color, (15, height - 15), (width - 15, 15), line_width)
+    pygame.draw.line(display, color, (15, height - 15), (height - 15, 15), line_width)
 
 def draw_descending_diagonal(player):
     if player == 1:
-        color = circle_color
-    elif player == 2:
         color = cross_color
+    elif player == 2:
+        color = circle_color
 
-    pygame.draw.line(display, color, (15, 15), (width - 15, height - 15), line_width)
+    pygame.draw.line(display, color, (15, 15), (height - 15, height - 15), line_width)
 
 def restart():
     display.fill(bg_color)
@@ -139,10 +140,10 @@ def restart():
 def main_menu():
     while True:
         display.fill(bg_color)
-        draw_text_centered("TIC TAC TOE", 40, white, display, width // 2, height // 4)
-        draw_text_centered("Press P to Play", 30, white, display, width // 2, height // 2 - 20)
-        draw_text_centered("Press C to Customize", 30, white, display, width // 2, height // 2 + 20)
-        draw_text_centered("Press Q to Quit", 30, white, display, width // 2, height // 2 + 60)
+        draw_text_centered("TIC TAC TOE", 60, white, display, width // 2, height // 4)
+        draw_text_centered("Press P to Play", 40, white, display, width // 2, height // 2 - 20)
+        draw_text_centered("Press C to Customize", 40, white, display, width // 2, height // 2 + 20)
+        draw_text_centered("Press Q to Quit", 40, white, display, width // 2, height // 2 + 60)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -161,9 +162,9 @@ def main_menu():
 def choose_play_mode():
     while True:
         display.fill(bg_color)
-        draw_text_centered("Choose Play Mode", 40, white, display, width // 2, height // 4)
-        draw_text_centered("Press 1: Play Against Bot", 30, white, display, width // 2, height // 2 - 20)
-        draw_text_centered("Press 2: Play Against Player", 30, white, display, width // 2, height // 2 + 20)
+        draw_text_centered("Choose Play Mode", 60, white, display, width // 2, height // 4)
+        draw_text_centered("Press 1: Play Against Bot", 40, white, display, width // 2, height // 2 - 20)
+        draw_text_centered("Press 2: Play Against Player", 40, white, display, width // 2, height // 2 + 20)
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -178,7 +179,7 @@ def choose_play_mode():
 
 def play_game(bot=False):
     restart()
-    player = 1
+    player = 1  # 'X' starts first
     game_over = False
 
     while True:
@@ -198,16 +199,17 @@ def play_game(bot=False):
                     mark_square(clicked_row, clicked_col, player)
                     if check_win(player):
                         game_over = True
-                    player = 3 - player  # Switch player
+                    player = 2  # After player 1 (X), it's player 2's (O) turn
                     draw_figures()
 
             if bot and player == 2 and not game_over:
-                pygame.time.wait(500)  # Bot "thinking" time
+                pygame.display.update()
+                time.sleep(2)  # Bot "thinking" time
                 bot_move = random.choice([(r, c) for r in range(board_rows) for c in range(board_cols) if available_square(r, c)])
-                mark_square(bot_move[0], bot_move[1], 2)
-                if check_win(2):
+                mark_square(bot_move[0], bot_move[1], player)
+                if check_win(player):
                     game_over = True
-                player = 1
+                player = 1  # Switch back to player 1 (X)
                 draw_figures()
 
             if event.type == pygame.KEYDOWN:
@@ -219,7 +221,7 @@ def play_game(bot=False):
         pygame.display.update()
 
 def customize_background():
-    global bg_color  
+    global bg_color
     while True:
         display.fill(bg_color)
         draw_text_centered("Choose Background Color", 40, white, display, width // 2, height // 5)
@@ -235,7 +237,7 @@ def customize_background():
             if event.type == pygame.KEYDOWN:
                 for i, (color_name, color_value) in enumerate(colors.items(), 1):
                     if event.key == pygame.K_1 + (i - 1):
-                        bg_color = color_value  # Modify the global bg_color
+                        bg_color = color_value
                         main_menu()
 
 def draw_text_centered(text, size, color, surface, x, y):
