@@ -1,6 +1,7 @@
 import pygame
 import sys
 import numpy as np
+import random
 
 # Initialize pygame
 pygame.init()
@@ -17,7 +18,19 @@ cross_width = 25
 space = square_size // 4
 
 # Define colors
-bg_color = (28, 170, 156)
+white = (255, 255, 255)
+black = (0, 0, 0)
+colors = {
+    'GREEN': (13, 124, 102),
+    'BLUE': (30, 42, 94),
+    'PINK': (247, 181, 202),
+    'PURPLE': (103, 65, 136),
+    'RED': (128, 0, 0),
+    'ORANGE': (255, 131, 67),
+    'YELLOW': (255, 218, 118),
+    'TURQUOISE': (119, 228, 200),
+}
+bg_color = colors['BLUE']
 line_color = (23, 145, 135)
 circle_color = (239, 231, 200)
 cross_color = (66, 66, 66)
@@ -25,7 +38,6 @@ cross_color = (66, 66, 66)
 # Create display
 display = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Tic Tac Toe")
-display.fill(bg_color)
 
 # Board setup
 board = np.zeros((board_rows, board_cols))
@@ -124,37 +136,113 @@ def restart():
         for col in range(board_cols):
             board[row][col] = 0
 
-draw_lines()
+def main_menu():
+    while True:
+        display.fill(bg_color)
+        draw_text_centered("TIC TAC TOE", 40, white, display, width // 2, height // 4)
+        draw_text_centered("Press P to Play", 30, white, display, width // 2, height // 2 - 20)
+        draw_text_centered("Press C to Customize", 30, white, display, width // 2, height // 2 + 20)
+        draw_text_centered("Press Q to Quit", 30, white, display, width // 2, height // 2 + 60)
+        pygame.display.update()
 
-# Main loop
-player = 1
-game_over = False
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    choose_play_mode()
+                elif event.key == pygame.K_c:
+                    customize_background()
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+def choose_play_mode():
+    while True:
+        display.fill(bg_color)
+        draw_text_centered("Choose Play Mode", 40, white, display, width // 2, height // 4)
+        draw_text_centered("Press 1: Play Against Bot", 30, white, display, width // 2, height // 2 - 20)
+        draw_text_centered("Press 2: Play Against Player", 30, white, display, width // 2, height // 2 + 20)
+        pygame.display.update()
 
-        if event.type == pygame.MOUSEBUTTONDOWN and not game_over:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    play_game(bot=True)
+                elif event.key == pygame.K_2:
+                    play_game(bot=False)
 
-            mouseX = event.pos[0]  # x
-            mouseY = event.pos[1]  # y
+def play_game(bot=False):
+    restart()
+    player = 1
+    game_over = False
 
-            clicked_row = int(mouseY // square_size)
-            clicked_col = int(mouseX // square_size)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
-            if available_square(clicked_row, clicked_col):
-                mark_square(clicked_row, clicked_col, player)
-                if check_win(player):
+            if event.type == pygame.MOUSEBUTTONDOWN and not game_over and not bot:
+                mouseX = event.pos[0]  # x
+                mouseY = event.pos[1]  # y
+
+                clicked_row = int(mouseY // square_size)
+                clicked_col = int(mouseX // square_size)
+
+                if available_square(clicked_row, clicked_col):
+                    mark_square(clicked_row, clicked_col, player)
+                    if check_win(player):
+                        game_over = True
+                    player = 3 - player  # Switch player
+                    draw_figures()
+
+            if bot and player == 2 and not game_over:
+                pygame.time.wait(500)  # Bot "thinking" time
+                bot_move = random.choice([(r, c) for r in range(board_rows) for c in range(board_cols) if available_square(r, c)])
+                mark_square(bot_move[0], bot_move[1], 2)
+                if check_win(2):
                     game_over = True
-                player = 3 - player  # Switch player
+                player = 1
                 draw_figures()
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_r:
-                restart()
-                player = 1
-                game_over = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    restart()
+                    player = 1
+                    game_over = False
 
-    pygame.display.update()
+        pygame.display.update()
+
+def customize_background():
+    global bg_color  
+    while True:
+        display.fill(bg_color)
+        draw_text_centered("Choose Background Color", 40, white, display, width // 2, height // 5)
+        for i, color_name in enumerate(colors.keys(), 1):
+            draw_text_centered(f"Press {i}: {color_name}", 30, white, display, width // 2, height // 3 + i * 30)
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                for i, (color_name, color_value) in enumerate(colors.items(), 1):
+                    if event.key == pygame.K_1 + (i - 1):
+                        bg_color = color_value  # Modify the global bg_color
+                        main_menu()
+
+def draw_text_centered(text, size, color, surface, x, y):
+    font = pygame.font.SysFont("bahnschrift", size)
+    text_surface = font.render(text, True, color)
+    text_rect = text_surface.get_rect(center=(x, y))
+    surface.blit(text_surface, text_rect)
+
+# Start the game with the main menu
+main_menu()
