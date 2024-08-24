@@ -141,6 +141,26 @@ def restart():
         for col in range(board_cols):
             board[row][col] = 0
 
+def game_over_screen():
+    draw_text_centered("Press R to Restart", 40, white, display, width // 2, height // 2 - 40)
+    draw_text_centered("Press M to go back to Main Menu", 40, white, display, width // 2, height // 2)
+    draw_text_centered("Press Q to Quit", 40, white, display, width // 2, height // 2 + 40)
+    pygame.display.update()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    play_game(bot=False)
+                elif event.key == pygame.K_m:
+                    main_menu()
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
+
 def main_menu():
     while True:
         display.fill(bg_color)
@@ -204,6 +224,10 @@ def play_game(bot=False):
                         mark_square(clicked_row, clicked_col, player)
                         if check_win(player):
                             game_over = True
+                            draw_figures()
+                            pygame.display.update()
+                            time.sleep(1)
+                            game_over_screen()
                         player = 2 if player == 1 else 1  # Switch turns
                         draw_figures()
 
@@ -214,6 +238,10 @@ def play_game(bot=False):
                 mark_square(bot_move[0], bot_move[1], player)
                 if check_win(player):
                     game_over = True
+                    draw_figures()
+                    pygame.display.update()
+                    time.sleep(1)
+                    game_over_screen()
                 player = 1  # Switch back to player 1 (X)
                 draw_figures()
 
