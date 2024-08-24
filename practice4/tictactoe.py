@@ -4,6 +4,7 @@ import numpy as np
 import random
 import time
 
+# Initialize pygame
 pygame.init()
 
 # Set up display
@@ -16,6 +17,10 @@ circle_radius = square_size // 3
 circle_width = 15
 cross_width = 25
 space = square_size // 4
+
+# Centering the grid
+grid_offset_x = (width - height) // 2  # To center the grid horizontally
+grid_offset_y = 0  # Already centered vertically
 
 # Define colors
 white = (255, 255, 255)
@@ -44,20 +49,20 @@ board = np.zeros((board_rows, board_cols))
 
 def draw_lines():
     # Horizontal lines
-    pygame.draw.line(display, line_color, (0, square_size), (height, square_size), line_width)
-    pygame.draw.line(display, line_color, (0, 2 * square_size), (height, 2 * square_size), line_width)
+    pygame.draw.line(display, line_color, (grid_offset_x, square_size), (grid_offset_x + height, square_size), line_width)
+    pygame.draw.line(display, line_color, (grid_offset_x, 2 * square_size), (grid_offset_x + height, 2 * square_size), line_width)
     # Vertical lines
-    pygame.draw.line(display, line_color, (square_size, 0), (square_size, height), line_width)
-    pygame.draw.line(display, line_color, (2 * square_size, 0), (2 * square_size, height), line_width)
+    pygame.draw.line(display, line_color, (grid_offset_x + square_size, grid_offset_y), (grid_offset_x + square_size, grid_offset_y + height), line_width)
+    pygame.draw.line(display, line_color, (grid_offset_x + 2 * square_size, grid_offset_y), (grid_offset_x + 2 * square_size, grid_offset_y + height), line_width)
 
 def draw_figures():
     for row in range(board_rows):
         for col in range(board_cols):
             if board[row][col] == 1:
-                pygame.draw.line(display, cross_color, (col * square_size + space, row * square_size + square_size - space), (col * square_size + square_size - space, row * square_size + space), cross_width)
-                pygame.draw.line(display, cross_color, (col * square_size + space, row * square_size + space), (col * square_size + square_size - space, row * square_size + square_size - space), cross_width)
+                pygame.draw.line(display, cross_color, (grid_offset_x + col * square_size + space, row * square_size + square_size - space), (grid_offset_x + col * square_size + square_size - space, row * square_size + space), cross_width)
+                pygame.draw.line(display, cross_color, (grid_offset_x + col * square_size + space, row * square_size + space), (grid_offset_x + col * square_size + square_size - space, row * square_size + square_size - space), cross_width)
             elif board[row][col] == 2:
-                pygame.draw.circle(display, circle_color, (int(col * square_size + square_size//2), int(row * square_size + square_size//2)), circle_radius, circle_width)
+                pygame.draw.circle(display, circle_color, (grid_offset_x + int(col * square_size + square_size // 2), int(row * square_size + square_size // 2)), circle_radius, circle_width)
 
 def mark_square(row, col, player):
     board[row][col] = player
@@ -94,7 +99,7 @@ def check_win(player):
     return False
 
 def draw_vertical_winning_line(col, player):
-    posX = col * square_size + square_size//2
+    posX = grid_offset_x + col * square_size + square_size // 2
 
     if player == 1:
         color = cross_color
@@ -104,14 +109,14 @@ def draw_vertical_winning_line(col, player):
     pygame.draw.line(display, color, (posX, 15), (posX, height - 15), line_width)
 
 def draw_horizontal_winning_line(row, player):
-    posY = row * square_size + square_size//2
+    posY = row * square_size + square_size // 2
 
     if player == 1:
         color = cross_color
     elif player == 2:
         color = circle_color
 
-    pygame.draw.line(display, color, (15, posY), (height - 15, posY), line_width)
+    pygame.draw.line(display, color, (grid_offset_x + 15, posY), (grid_offset_x + height - 15, posY), line_width)
 
 def draw_ascending_diagonal(player):
     if player == 1:
@@ -119,7 +124,7 @@ def draw_ascending_diagonal(player):
     elif player == 2:
         color = circle_color
 
-    pygame.draw.line(display, color, (15, height - 15), (height - 15, 15), line_width)
+    pygame.draw.line(display, color, (grid_offset_x + 15, height - 15), (grid_offset_x + height - 15, 15), line_width)
 
 def draw_descending_diagonal(player):
     if player == 1:
@@ -127,7 +132,7 @@ def draw_descending_diagonal(player):
     elif player == 2:
         color = circle_color
 
-    pygame.draw.line(display, color, (15, 15), (height - 15, height - 15), line_width)
+    pygame.draw.line(display, color, (grid_offset_x + 15, 15), (grid_offset_x + height - 15, height - 15), line_width)
 
 def restart():
     display.fill(bg_color)
@@ -187,19 +192,20 @@ def play_game(bot=False):
                 pygame.quit()
                 sys.exit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN and not game_over and not bot:
+            if event.type == pygame.MOUSEBUTTONDOWN and not game_over:
                 mouseX = event.pos[0]  # x
                 mouseY = event.pos[1]  # y
 
-                clicked_row = int(mouseY // square_size)
-                clicked_col = int(mouseX // square_size)
+                if grid_offset_x <= mouseX < grid_offset_x + height and grid_offset_y <= mouseY < grid_offset_y + height:
+                    clicked_row = int((mouseY - grid_offset_y) // square_size)
+                    clicked_col = int((mouseX - grid_offset_x) // square_size)
 
-                if available_square(clicked_row, clicked_col):
-                    mark_square(clicked_row, clicked_col, player)
-                    if check_win(player):
-                        game_over = True
-                    player = 2  # After player 1 (X), it's player 2's (O) turn
-                    draw_figures()
+                    if available_square(clicked_row, clicked_col):
+                        mark_square(clicked_row, clicked_col, player)
+                        if check_win(player):
+                            game_over = True
+                        player = 2 if player == 1 else 1  # Switch turns
+                        draw_figures()
 
             if bot and player == 2 and not game_over:
                 pygame.display.update()
