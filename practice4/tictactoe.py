@@ -239,7 +239,7 @@ def play_game(bot=False):
                     pygame.display.update()
                     time.sleep(1)
                     game_over_screen(bot=bot)
-                player = 1  # Switch back to player 1 (X)
+                player = 1  
                 draw_figures()
 
             if event.type == pygame.KEYDOWN:
