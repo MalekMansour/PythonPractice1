@@ -141,7 +141,7 @@ def restart():
         for col in range(board_cols):
             board[row][col] = 0
 
-def game_over_screen():
+def game_over_screen(bot):
     draw_text_centered("Press R to Restart", 40, white, display, width // 2, height // 2 - 40)
     draw_text_centered("Press M to go back to Main Menu", 40, white, display, width // 2, height // 2)
     draw_text_centered("Press Q to Quit", 40, white, display, width // 2, height // 2 + 40)
@@ -154,7 +154,7 @@ def game_over_screen():
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    play_game(bot=False)
+                    play_game(bot=bot)  # Restart the game in the same mode
                 elif event.key == pygame.K_m:
                     main_menu()
                 elif event.key == pygame.K_q:
@@ -227,7 +227,7 @@ def play_game(bot=False):
                             draw_figures()
                             pygame.display.update()
                             time.sleep(1)
-                            game_over_screen()
+                            game_over_screen(bot=bot)
                         player = 2 if player == 1 else 1  # Switch turns
                         draw_figures()
 
@@ -241,7 +241,7 @@ def play_game(bot=False):
                     draw_figures()
                     pygame.display.update()
                     time.sleep(1)
-                    game_over_screen()
+                    game_over_screen(bot=bot)
                 player = 1  # Switch back to player 1 (X)
                 draw_figures()
 
