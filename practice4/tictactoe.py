@@ -4,10 +4,9 @@ import numpy as np
 import random
 import time
 
-# Initialize pygame
 pygame.init()
 
-# Set up display
+# Display
 width, height = 1200, 600
 line_width = 15
 board_rows = 3
@@ -17,12 +16,10 @@ circle_radius = square_size // 3
 circle_width = 15
 cross_width = 25
 space = square_size // 4
+grid_offset_x = (width - height) // 2  
+grid_offset_y = 0  
 
-# Centering the grid
-grid_offset_x = (width - height) // 2  # To center the grid horizontally
-grid_offset_y = 0  # Already centered vertically
-
-# Define colors
+# Colors
 white = (255, 255, 255)
 black = (0, 0, 0)
 colors = {
