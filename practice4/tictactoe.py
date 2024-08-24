@@ -48,6 +48,7 @@ def draw_lines():
     # Horizontal lines
     pygame.draw.line(display, line_color, (grid_offset_x, square_size), (grid_offset_x + height, square_size), line_width)
     pygame.draw.line(display, line_color, (grid_offset_x, 2 * square_size), (grid_offset_x + height, 2 * square_size), line_width)
+    
     # Vertical lines
     pygame.draw.line(display, line_color, (grid_offset_x + square_size, grid_offset_y), (grid_offset_x + square_size, grid_offset_y + height), line_width)
     pygame.draw.line(display, line_color, (grid_offset_x + 2 * square_size, grid_offset_y), (grid_offset_x + 2 * square_size, grid_offset_y + height), line_width)
@@ -200,7 +201,7 @@ def choose_play_mode():
 
 def play_game(bot=False):
     restart()
-    player = 1  # 'X' starts first
+    player = 1  
     game_over = False
 
     while True:
@@ -225,7 +226,7 @@ def play_game(bot=False):
                             pygame.display.update()
                             time.sleep(1)
                             game_over_screen(bot=bot)
-                        player = 2 if player == 1 else 1  # Switch turns
+                        player = 2 if player == 1 else 1  
                         draw_figures()
 
             if bot and player == 2 and not game_over:
@@ -276,5 +277,4 @@ def draw_text_centered(text, size, color, surface, x, y):
     text_rect = text_surface.get_rect(center=(x, y))
     surface.blit(text_surface, text_rect)
 
-# Start the game with the main menu
 main_menu()
